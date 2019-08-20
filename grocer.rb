@@ -18,6 +18,7 @@ end
 
 def apply_coupons(cart, coupons)
   coupons.each do |i|
+<<<<<<< HEAD
     if cart.keys.include?(i[:item])
       if cart[i[:item]][:count] >= i[:num]
         if cart["#{i[:item]} W/COUPON"]
@@ -30,11 +31,30 @@ def apply_coupons(cart, coupons)
           }
         end
         cart[i[:item]][:count] -= i[:num]
+=======
+    if cart.keys.includes?(i[:item])
+      cart["#{i[:item]} W/COUPON"] = {
+        :price => i[:cost] / i[:num],
+        :clearance => cart[i[:item]][:clearance],
+        :count => i[:num]
+      }
+      if cart[i[:item]][:count] >= i[:num]
+        cart[i[:item]][:count] = cart[i[:item]][:count] - i[:num]
+>>>>>>> 775324b4f1206f9a12e52b75c07fcc04578160db
       end
     end
   end
   return cart
 end
+=begin
+  change coupons to hash
+    check if item = cart key
+    add coupon to cart
+    update count of original key
+  
+  #cart = hash - {"AVOCADO"=>{:price=>3.0, :clearance=>true, :count=>2}}
+  #coupons = array - [{:item=>"AVOCADO", :num=>2, :cost=>5.0}]
+=end
 
 def apply_clearance(cart)
   cart.each do |item, values|
